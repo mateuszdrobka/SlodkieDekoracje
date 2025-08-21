@@ -120,42 +120,62 @@ export default function ShopPage() {
       </header>
 
       {/* Products */}
-      <section className="max-w-6xl mx-auto px-4 py-10">
-        <div className="flex items-end justify-between mb-6">
-          <h2 className="text-2xl font-semibold">{category}</h2>
-          <p className="text-sm text-stone-500">Wszystkie produkty są ręcznie wykonane. Kolory mogą się delikatnie różnić.</p>
-        </div>
+<section className="max-w-6xl mx-auto px-4 py-10">
+  <div className="flex items-end justify-between mb-6">
+    <h2 className="text-2xl font-semibold">{category}</h2>
+    <p className="text-sm text-stone-500">Wszystkie produkty są ręcznie wykonane. Kolory mogą się delikatnie różnić.</p>
+  </div>
 
-        <AnimatePresence mode="popLayout">
-          <motion.div
-            key={category}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-          >
-            {products[category].map((p) => (
-              <motion.div key={p.id} layout className="group rounded-3xl border border-stone-200 bg-white shadow-sm hover:shadow-md transition overflow-hidden">
-                <div className="aspect-square overflow-hidden">
-                  <img src={p.img} alt={p.name} className="h-full w-full object-cover group-hover:scale-105 transition" />
-                </div>
-                <div className="p-4">
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-medium">{p.name}</h3>
-                    <span className="font-semibold">{p.price} zł</span>
-                  </div>
-                  <div className="mt-4 flex gap-3">
-                    <button onClick={() => addToCart(p)} className="flex-1 px-4 py-2 rounded-xl bg-amber-200 hover:bg-amber-300 text-stone-900 font-medium">
-                      Dodaj
-                    </button>
-                    <button className="px-4 py-2 rounded-xl border border-stone-300 hover:bg-stone-100">Szczegóły</button>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </AnimatePresence>
-      </section>
+  <AnimatePresence mode="popLayout">
+    <motion.div
+      key={category}
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0 }}
+      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+    >
+      {products[category].map((p) => (
+        <motion.div
+          key={p.id}
+          layout
+          whileTap={{ scale: 0.97 }}
+          className="group rounded-3xl border border-stone-200 bg-white shadow-sm hover:shadow-md transition overflow-hidden"
+        >
+          <div className="aspect-square overflow-hidden">
+            <img
+              src={p.img}
+              alt={p.name}
+              className="h-full w-full object-cover group-hover:scale-105 transition"
+            />
+          </div>
+          <div className="p-4">
+            <div className="flex items-center justify-between">
+              <h3 className="font-medium">{p.name}</h3>
+              <span className="font-semibold">{p.price} zł</span>
+            </div>
+            <div className="mt-4 flex gap-3">
+              <motion.button
+                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.03 }}
+                onClick={() => addToCart(p)}
+                className="flex-1 px-4 py-2 rounded-xl bg-amber-200 hover:bg-amber-300 text-stone-900 font-medium"
+              >
+                Dodaj
+              </motion.button>
+              <motion.button
+                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.02 }}
+                className="px-4 py-2 rounded-xl border border-stone-300 hover:bg-stone-100"
+              >
+                Szczegóły
+              </motion.button>
+            </div>
+          </div>
+        </motion.div>
+      ))}
+    </motion.div>
+  </AnimatePresence>
+</section>
 
       {/* Info strip */}
       <section className="bg-amber-50 border-y border-amber-100">
@@ -179,52 +199,92 @@ export default function ShopPage() {
         </form>
       </section>
 
-      {/* Cart modal */}
-      <AnimatePresence>
-        {openCart && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/40 flex justify-end z-50"
+   {/* Cart Drawer */}
+<AnimatePresence>
+  {openCart && (
+    <motion.aside
+      initial={{ x: "100%" }}
+      animate={{ x: 0 }}
+      exit={{ x: "100%" }}
+      transition={{ type: "tween", duration: 0.25 }}
+      className="fixed inset-y-0 right-0 w-full max-w-md bg-white border-l border-stone-200 z-40 shadow-2xl"
+    >
+      <div className="h-full flex flex-col">
+        <div className="px-5 py-4 border-b border-stone-200 flex items-center justify-between">
+          <h3 className="font-semibold">Twój koszyk</h3>
+          <motion.button
+            whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: 1.05 }}
             onClick={() => setOpenCart(false)}
+            className="px-3 py-1.5 rounded-lg border border-stone-300 hover:bg-stone-100"
           >
-            <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              className="w-80 bg-white h-full p-6 overflow-y-auto"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <h3 className="text-xl font-semibold mb-4">Twój koszyk</h3>
-              {cart.length === 0 ? (
-                <p className="text-stone-500">Koszyk jest pusty</p>
-              ) : (
-                <>
-                  {cart.map((i) => (
-                    <div key={i.id} className="flex items-center justify-between mb-3">
-                      <div>
-                        <p className="font-medium">{i.name}</p>
-                        <p className="text-sm text-stone-500">{i.price} zł</p>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <button onClick={() => changeQty(i.id, -1)} className="px-2 py-1 border rounded">-</button>
-                        <span className="px-2">{i.qty || 1}</span>
-                        <button onClick={() => changeQty(i.id, 1)} className="px-2 py-1 border rounded">+</button>
-                        <button onClick={() => removeFromCart(i.id)} className="ml-2 text-red-500">x</button>
-                      </div>
+            Zamknij
+          </motion.button>
+        </div>
+        <div className="flex-1 overflow-auto p-5">
+          {cart.length === 0 ? (
+            <p className="text-stone-500">Koszyk jest pusty.</p>
+          ) : (
+            <ul className="space-y-4">
+              {cart.map((i) => (
+                <li key={i.id} className="flex gap-3 items-center">
+                  <img src={i.img} alt={i.name} className="w-16 h-16 rounded-xl object-cover border border-stone-200" />
+                  <div className="flex-1">
+                    <p className="font-medium leading-tight">{i.name}</p>
+                    <p className="text-sm text-stone-500">{i.price} zł / szt.</p>
+                    <div className="mt-2 inline-flex items-center gap-2">
+                      <motion.button
+                        whileTap={{ scale: 0.9 }}
+                        onClick={() => changeQty(i.id, -1)}
+                        className="px-2 py-1 rounded-lg border border-stone-300"
+                      >
+                        -
+                      </motion.button>
+                      <span className="min-w-6 text-center">{i.qty}</span>
+                      <motion.button
+                        whileTap={{ scale: 0.9 }}
+                        onClick={() => changeQty(i.id, 1)}
+                        className="px-2 py-1 rounded-lg border border-stone-300"
+                      >
+                        +
+                      </motion.button>
                     </div>
-                  ))}
-                  <p className="font-semibold mt-4">Łącznie: {total} zł</p>
-                  <button className="w-full mt-4 px-4 py-2 rounded-xl bg-amber-200 hover:bg-amber-300 text-stone-900 font-medium">
-                    Przejdź do kasy
-                  </button>
-                </>
-              )}
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+                  </div>
+                  <div className="text-right">
+                    <p className="font-semibold">{(i.price * (i.qty || 1)).toFixed(2)} zł</p>
+                    <motion.button
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => removeFromCart(i.id)}
+                      className="text-sm text-rose-600 hover:underline"
+                    >
+                      Usuń
+                    </motion.button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+        <div className="px-5 py-4 border-t border-stone-200">
+          <div className="flex items-center justify-between mb-3">
+            <span>Suma</span>
+            <span className="text-lg font-semibold">{total.toFixed(2)} zł</span>
+          </div>
+          <motion.button
+            whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: 1.02 }}
+            className="w-full px-5 py-3 rounded-xl bg-amber-300 hover:bg-amber-400 text-stone-900 font-semibold"
+          >
+            Przejdź do zamówienia
+          </motion.button>
+          <p className="mt-2 text-xs text-stone-500">
+            Zamówienia finalizowane ręcznie (przelew/Blik). Dane do płatności otrzymasz e‑mailem.
+          </p>
+        </div>
+      </div>
+    </motion.aside>
+  )}
+</AnimatePresence>
     </div>
   );
 }
