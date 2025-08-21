@@ -8,8 +8,15 @@ import { motion, AnimatePresence } from "framer-motion";
 
 export default function ShopPage() {
   const [category, setCategory] = useState("Figurki");
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState<Product[]>([]);
   const [openCart, setOpenCart] = useState(false);
+type Product = {
+  id: string;
+  name: string;
+  price: number;
+  img: string;
+  qty: number; // ilość w koszyku, opcjonalna
+};
 
   const products = {
     Figurki: [
@@ -29,13 +36,18 @@ export default function ShopPage() {
     ],
   };
 
-  const addToCart = (p) => setCart((c) => {
-    const exists = c.find((i) => i.id === p.id);
-    if (exists) return c.map((i) => (i.id === p.id ? { ...i, qty: i.qty + 1 } : i));
-    return [...c, { ...p, qty: 1 }];
-  });
-  const removeFromCart = (id) => setCart((c) => c.filter((i) => i.id !== id));
-  const changeQty = (id, d) => setCart((c) => c.map((i) => (i.id === id ? { ...i, qty: Math.max(1, i.qty + d) } : i)));
+const addToCart = (p: Product) => setCart((c: Product[]) => {
+  const exists = c.find((i) => i.id === p.id);
+  if (exists) return c.map((i) => (i.id === p.id ? { ...i, qty: (i.qty || 1) + 1 } : i));
+  return [...c, { ...p, qty: 1 }];
+});
+
+const removeFromCart = (id: string) => setCart((c: Product[]) => c.filter((i) => i.id !== id));
+
+const changeQty = (id: string, d: number) => setCart((c: Product[]) =>
+  c.map((i) => (i.id === id ? { ...i, qty: Math.max(1, (i.qty || 1) + d) } : i))
+);
+
 
   const total = useMemo(() => cart.reduce((s, i) => s + i.price * i.qty, 0), [cart]);
 
