@@ -154,9 +154,7 @@ export default function ShopPage() {
               </motion.div>
             ))}
           </motion.div>
-    
-
- </AnimatePresence>
+        </AnimatePresence>
       </section>
 
       {/* Info strip */}
@@ -177,70 +175,56 @@ export default function ShopPage() {
           <input className="px-4 py-3 rounded-xl border border-stone-300 bg-white" placeholder="E-mail" />
           <input className="sm:col-span-2 px-4 py-3 rounded-xl border border-stone-300 bg-white" placeholder="Temat" />
           <textarea rows={4} className="sm:col-span-2 px-4 py-3 rounded-xl border border-stone-300 bg-white" placeholder="Wiadomość" />
-          <button className="w-full sm:w-auto px-5 py-3 rounded-xl bg-stone-900 text-white hover:bg-stone-800">Wyślij</button>
+          <button className="w-full sm:w-auto px-6 py-3 rounded-xl bg-amber-200 hover:bg-amber-300 text-stone-900 font-medium">Wyślij</button>
         </form>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-stone-200 bg-white">
-        <div className="max-w-6xl mx-auto px-4 py-8 text-sm text-stone-600 flex flex-col sm:flex-row gap-2 sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} Słodkie Dekoracje</p>
-          <p>Sprzedaż wyłącznie online • Płatność: przelew/Blik</p>
-        </div>
-      </footer>
-
-      {/* Cart Drawer */}
+      {/* Cart modal */}
       <AnimatePresence>
         {openCart && (
-          <motion.aside initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }} transition={{ type: "tween", duration: 0.25 }} className="fixed inset-y-0 right-0 w-full max-w-md bg-white border-l border-stone-200 z-40 shadow-2xl">
-            <div className="h-full flex flex-col">
-              <div className="px-5 py-4 border-b border-stone-200 flex items-center justify-between">
-                <h3 className="font-semibold">Twój koszyk</h3>
-                <button onClick={() => setOpenCart(false)} className="px-3 py-1.5 rounded-lg border border-stone-300 hover:bg-stone-100">Zamknij</button>
-              </div>
-              <div className="flex-1 overflow-auto p-5">
-                {cart.length === 0 ? (
-                  <p className="text-stone-500">Koszyk jest pusty.</p>
-                ) : (
-                  <ul className="space-y-4">
-                    {cart.map((i) => (
-                      <li key={i.id} className="flex gap-3 items-center">
-                        <img src={i.img} alt={i.name} className="w-16 h-16 rounded-xl object-cover border border-stone-200" />
-                        <div className="flex-1">
-                          <p className="font-medium leading-tight">{i.name}</p>
-                          <p className="text-sm text-stone-500">{i.price} zł / szt.</p>
-                          <div className="mt-2 inline-flex items-center gap-2">
-                            <button onClick={() => changeQty(i.id, -1)} className="px-2 py-1 rounded-lg border border-stone-300">-</button>
-                            <span className="min-w-6 text-center">{i.qty}</span>
-                            <button onClick={() => changeQty(i.id, 1)} className="px-2 py-1 rounded-lg border border-stone-300">+</button>
-                          </div>
-                        </div>
-                        <div className="text-right">
-                          <p className="font-semibold">{(i.price * i.qty).toFixed(2)} zł</p>
-                          <button onClick={() => removeFromCart(i.id)} className="text-sm text-rose-600 hover:underline">Usuń</button>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-              <div className="px-5 py-4 border-t border-stone-200">
-                <div className="flex items-center justify-between mb-3">
-                  <span>Suma</span>
-                  <span className="text-lg font-semibold">{total.toFixed(2)} zł</span>
-                </div>
-                <button className="w-full px-5 py-3 rounded-xl bg-amber-300 hover:bg-amber-400 text-stone-900 font-semibold">Przejdź do zamówienia</button>
-                <p className="mt-2 text-xs text-stone-500">Zamówienia finalizowane ręcznie (przelew/Blik). Dane do płatności otrzymasz e‑mailem.</p>
-              </div>
-            </div>
-          </motion.aside>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/40 flex justify-end z-50"
+            onClick={() => setOpenCart(false)}
+          >
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              className="w-80 bg-white h-full p-6 overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <h3 className="text-xl font-semibold mb-4">Twój koszyk</h3>
+              {cart.length === 0 ? (
+                <p className="text-stone-500">Koszyk jest pusty</p>
+              ) : (
+                <>
+                  {cart.map((i) => (
+                    <div key={i.id} className="flex items-center justify-between mb-3">
+                      <div>
+                        <p className="font-medium">{i.name}</p>
+                        <p className="text-sm text-stone-500">{i.price} zł</p>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <button onClick={() => changeQty(i.id, -1)} className="px-2 py-1 border rounded">-</button>
+                        <span className="px-2">{i.qty || 1}</span>
+                        <button onClick={() => changeQty(i.id, 1)} className="px-2 py-1 border rounded">+</button>
+                        <button onClick={() => removeFromCart(i.id)} className="ml-2 text-red-500">x</button>
+                      </div>
+                    </div>
+                  ))}
+                  <p className="font-semibold mt-4">Łącznie: {total} zł</p>
+                  <button className="w-full mt-4 px-4 py-2 rounded-xl bg-amber-200 hover:bg-amber-300 text-stone-900 font-medium">
+                    Przejdź do kasy
+                  </button>
+                </>
+              )}
+            </motion.div>
+          </motion.div>
         )}
       </AnimatePresence>
-
-      {/* Floating cart button on mobile */}
-      <button onClick={() => setOpenCart(true)} className="md:hidden fixed bottom-5 right-5 px-5 py-3 rounded-2xl shadow-xl bg-stone-900 text-white">
-        Koszyk ({cart.reduce((s, i) => s + i.qty, 0)})
-      </button>
     </div>
   );
 }
