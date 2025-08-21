@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import SocialLinks from "./SocialLinks"; 
 
 type Product = {
   id: string;
@@ -199,8 +200,9 @@ export default function ShopPage() {
           <textarea rows={4} className="sm:col-span-2 px-4 py-3 rounded-xl border border-stone-300 bg-white" placeholder="Wiadomość" />
           <button className="w-full sm:w-auto px-6 py-3 rounded-xl bg-amber-200 hover:bg-amber-300 text-stone-900 font-medium">Wyślij</button>
         </form>
+        <SocialLinks />
       </section>
-
+{/* Footer */}
       <footer className="border-t border-stone-200 bg-white">
   <div className="max-w-6xl mx-auto px-4 py-8 text-sm text-stone-600 flex flex-col sm:flex-row gap-2 sm:items-center sm:justify-between">
     <p>© {new Date().getFullYear()} Słodkie Dekoracje</p>
@@ -209,9 +211,12 @@ export default function ShopPage() {
       <a href="https://www.instagram.com/figurki_z_czekolady/" target="_blank" rel="noopener noreferrer" className="hover:text-amber-500">Instagram</a>
       <a href="https://www.vinted.pl/u/twoj_profil" target="_blank" rel="noopener noreferrer" className="hover:text-amber-500">Vinted</a>
       <a href="https://www.olx.pl/u/twoj_profil" target="_blank" rel="noopener noreferrer" className="hover:text-amber-500">OLX</a>
+    
     </div>
   </div>
 </footer>
+
+
 
 
    {/* Cart Drawer */}
