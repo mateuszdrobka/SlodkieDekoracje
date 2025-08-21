@@ -201,6 +201,19 @@ export default function ShopPage() {
         </form>
       </section>
 
+      <footer className="border-t border-stone-200 bg-white">
+  <div className="max-w-6xl mx-auto px-4 py-8 text-sm text-stone-600 flex flex-col sm:flex-row gap-2 sm:items-center sm:justify-between">
+    <p>© {new Date().getFullYear()} Słodkie Dekoracje</p>
+    <p>Sprzedaż wyłącznie online • Płatność: przelew/Blik</p>
+    <div className="flex gap-4 mt-2 sm:mt-0">
+      <a href="https://www.instagram.com/figurki_z_czekolady/" target="_blank" rel="noopener noreferrer" className="hover:text-amber-500">Instagram</a>
+      <a href="https://www.vinted.pl/u/twoj_profil" target="_blank" rel="noopener noreferrer" className="hover:text-amber-500">Vinted</a>
+      <a href="https://www.olx.pl/u/twoj_profil" target="_blank" rel="noopener noreferrer" className="hover:text-amber-500">OLX</a>
+    </div>
+  </div>
+</footer>
+
+
    {/* Cart Drawer */}
 <AnimatePresence>
   {openCart && (
