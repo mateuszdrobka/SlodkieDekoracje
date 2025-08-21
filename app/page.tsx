@@ -113,7 +113,7 @@ export default function ShopPage() {
             className="md:justify-self-end"
           >
             <div className="aspect-[4/3] rounded-3xl bg-gradient-to-br from-white to-amber-50 border border-amber-100 shadow-inner overflow-hidden">
-              <img src="/img/logo.png" alt="Logo My Cake Factory" className="w-full h-full object-cover" />
+              <img src="/img/Logo.png" alt="Logo strony" className="w-full h-full object-cover" />
             </div>
           </motion.div>
         </div>
