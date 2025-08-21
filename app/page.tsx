@@ -89,10 +89,12 @@ export default function ShopPage() {
       <header className="relative overflow-hidden">
         <div className="max-w-6xl mx-auto px-4 py-14 grid md:grid-cols-2 gap-8 items-center">
           <div>
-            <h1 className="text-4xl md:text-5xl font-bold leading-tight">Figurki czekoladowe i ozdoby z masy cukrowej</h1>
+            <h1 className="text-4xl md:text-5xl font-bold leading-tight">Figurki i dekoracje do tortów!</h1>
             <p className="mt-4 text-stone-600">
-              Ręcznie robione dekoracje na torty – idealne na urodziny, śluby i każdą słodką okazję. <br />
-              W 100% online, bezpieczna wysyłka.
+              Ręcznie robione dekoracje na torty – idealne na urodziny, śluby i każdą słodką okazję. <br /><br />
+              <b>Każdy produkt można personalizować - zmieniać kolory oraz konfiguracje zestawu!</b> <br /><br />
+              W 100% online.<br />
+              Bezpieczna wysyłka.
             </p>
             <div className="mt-6 flex gap-3">
               {tabs.map((t) => (
