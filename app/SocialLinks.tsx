@@ -20,7 +20,7 @@ export default function SocialLinks() {
         rel="noopener noreferrer"
         className="flex flex-col items-center hover:scale-110 transition"
       >
-        <img src="/img/vinted.png" alt="Vinted" className="w-8 h-8" />
+        <img src="/img/vinted.png" alt="Vinted" className="w-6 h-6" />
        <span className="mt-1 text-sm font-semibold font-sans">
           Vinted
         </span>
@@ -33,7 +33,7 @@ export default function SocialLinks() {
         rel="noopener noreferrer"
         className="flex flex-col items-center hover:scale-110 transition"
       >
-       <img src="/img/olx.png" alt="OLX" className="w-8 h-8" />
+       <img src="/img/olx.png" alt="OLX" className="w-6 h-6" />
         <span className="mt-1 text-sm font-semibold font-sans">OLX</span>
       </a>
   
@@ -43,7 +43,7 @@ export default function SocialLinks() {
         rel="noopener noreferrer"
         className="flex flex-col items-center hover:scale-110 transition"
       >
-        <img src="/img/instagram.png" alt="Instagram" className="w-8 h-8" />
+        <img src="/img/instagram.png" alt="Instagram" className="w-6 h-6" />
        <span className="mt-1 text-sm font-semibold font-sans">
           Instagram
         </span>
