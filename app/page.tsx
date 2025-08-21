@@ -154,10 +154,93 @@ export default function ShopPage() {
               </motion.div>
             ))}
           </motion.div>
-        </AnimatePresence>
+    
+
+ </AnimatePresence>
       </section>
 
-      {/* ... reszta kodu pozostaje bez zmian ... */}
+      {/* Info strip */}
+      <section className="bg-amber-50 border-y border-amber-100">
+        <div className="max-w-6xl mx-auto px-4 py-6 grid md:grid-cols-3 gap-4 text-sm">
+          <InfoItem title="Ręczne wykonanie" text="Każdy produkt jest przygotowywany na zamówienie." />
+          <InfoItem title="Wysyłka bezpieczna termicznie" text="Opakowania ochronne i wkłady chłodzące w cieplejsze dni." />
+          <InfoItem title="Alergeny" text="Może zawierać: mleko, soję, orzechy." />
+        </div>
+      </section>
+
+      {/* Contact */}
+      <section id="kontakt" className="max-w-6xl mx-auto px-4 py-12">
+        <h2 className="text-2xl font-semibold mb-4">Kontakt i zamówienia niestandardowe</h2>
+        <p className="text-stone-600 mb-6">Masz pomysł na indywidualny projekt? Napisz do nas – przygotujemy wycenę i termin.</p>
+        <form onSubmit={(e) => e.preventDefault()} className="grid sm:grid-cols-2 gap-4 max-w-3xl">
+          <input className="px-4 py-3 rounded-xl border border-stone-300 bg-white" placeholder="Imię" />
+          <input className="px-4 py-3 rounded-xl border border-stone-300 bg-white" placeholder="E-mail" />
+          <input className="sm:col-span-2 px-4 py-3 rounded-xl border border-stone-300 bg-white" placeholder="Temat" />
+          <textarea rows={4} className="sm:col-span-2 px-4 py-3 rounded-xl border border-stone-300 bg-white" placeholder="Wiadomość" />
+          <button className="w-full sm:w-auto px-5 py-3 rounded-xl bg-stone-900 text-white hover:bg-stone-800">Wyślij</button>
+        </form>
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t border-stone-200 bg-white">
+        <div className="max-w-6xl mx-auto px-4 py-8 text-sm text-stone-600 flex flex-col sm:flex-row gap-2 sm:items-center sm:justify-between">
+          <p>© {new Date().getFullYear()} Słodkie Dekoracje</p>
+          <p>Sprzedaż wyłącznie online • Płatność: przelew/Blik</p>
+        </div>
+      </footer>
+
+      {/* Cart Drawer */}
+      <AnimatePresence>
+        {openCart && (
+          <motion.aside initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }} transition={{ type: "tween", duration: 0.25 }} className="fixed inset-y-0 right-0 w-full max-w-md bg-white border-l border-stone-200 z-40 shadow-2xl">
+            <div className="h-full flex flex-col">
+              <div className="px-5 py-4 border-b border-stone-200 flex items-center justify-between">
+                <h3 className="font-semibold">Twój koszyk</h3>
+                <button onClick={() => setOpenCart(false)} className="px-3 py-1.5 rounded-lg border border-stone-300 hover:bg-stone-100">Zamknij</button>
+              </div>
+              <div className="flex-1 overflow-auto p-5">
+                {cart.length === 0 ? (
+                  <p className="text-stone-500">Koszyk jest pusty.</p>
+                ) : (
+                  <ul className="space-y-4">
+                    {cart.map((i) => (
+                      <li key={i.id} className="flex gap-3 items-center">
+                        <img src={i.img} alt={i.name} className="w-16 h-16 rounded-xl object-cover border border-stone-200" />
+                        <div className="flex-1">
+                          <p className="font-medium leading-tight">{i.name}</p>
+                          <p className="text-sm text-stone-500">{i.price} zł / szt.</p>
+                          <div className="mt-2 inline-flex items-center gap-2">
+                            <button onClick={() => changeQty(i.id, -1)} className="px-2 py-1 rounded-lg border border-stone-300">-</button>
+                            <span className="min-w-6 text-center">{i.qty}</span>
+                            <button onClick={() => changeQty(i.id, 1)} className="px-2 py-1 rounded-lg border border-stone-300">+</button>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <p className="font-semibold">{(i.price * i.qty).toFixed(2)} zł</p>
+                          <button onClick={() => removeFromCart(i.id)} className="text-sm text-rose-600 hover:underline">Usuń</button>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+              <div className="px-5 py-4 border-t border-stone-200">
+                <div className="flex items-center justify-between mb-3">
+                  <span>Suma</span>
+                  <span className="text-lg font-semibold">{total.toFixed(2)} zł</span>
+                </div>
+                <button className="w-full px-5 py-3 rounded-xl bg-amber-300 hover:bg-amber-400 text-stone-900 font-semibold">Przejdź do zamówienia</button>
+                <p className="mt-2 text-xs text-stone-500">Zamówienia finalizowane ręcznie (przelew/Blik). Dane do płatności otrzymasz e‑mailem.</p>
+              </div>
+            </div>
+          </motion.aside>
+        )}
+      </AnimatePresence>
+
+      {/* Floating cart button on mobile */}
+      <button onClick={() => setOpenCart(true)} className="md:hidden fixed bottom-5 right-5 px-5 py-3 rounded-2xl shadow-xl bg-stone-900 text-white">
+        Koszyk ({cart.reduce((s, i) => s + i.qty, 0)})
+      </button>
     </div>
   );
 }
