@@ -1,9 +1,9 @@
-import { SiInstagram, SiVinted, SiOlx } from "react-icons/si";
+import { SiInstagram } from "react-icons/si";
 
 export default function SocialLinks() {
   return (
     <div className="flex gap-6 justify-center mt-6">
-      <a
+      {/*<a
         href="https://www.instagram.com/figurki_z_czekolady/"
         target="_blank"
         rel="noopener noreferrer"
@@ -11,25 +11,48 @@ export default function SocialLinks() {
       >
         <SiInstagram size={32} color="#E1306C" />
         <span className="mt-1 text-sm font-medium">Instagram</span>
-      </a>
+      </a>*/}
+
+    {/* Vinted */}
       <a
         href="https://www.vinted.pl/u/twoj_profil"
         target="_blank"
         rel="noopener noreferrer"
         className="flex flex-col items-center hover:scale-110 transition"
       >
-        <SiVinted size={32} color="#6DCF72" />
-        <span className="mt-1 text-sm font-medium">Vinted</span>
+        <img src="/img/vinted.png" alt="Vinted" className="w-8 h-8" />
+       <span className="mt-1 text-sm font-semibold font-sans">
+          Vinted
+        </span>
       </a>
+
+      {/* OLX */}
       <a
-        href="https://www.olx.pl/u/twoj_profil"
+        href="https://www.olx.pl/uzytkownik/twoj_profil/"
         target="_blank"
         rel="noopener noreferrer"
         className="flex flex-col items-center hover:scale-110 transition"
       >
-        <SiOlx size={32} color="#f7a400" />
-        <span className="mt-1 text-sm font-medium">OLX</span>
+       <img src="/img/olx.png" alt="OLX" className="w-8 h-8" />
+        <span className="mt-1 text-sm font-semibold font-sans">OLX</span>
       </a>
-    </div>
+  
+        <a
+        href="https://www.instagram.com/figurki_z_czekolady/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex flex-col items-center hover:scale-110 transition"
+      >
+        <img src="/img/instagram.png" alt="Instagram" className="w-8 h-8" />
+       <span className="mt-1 text-sm font-semibold font-sans">
+          Instagram
+        </span>
+      </a>
+  </div>
   );
 }
+
+
+
+
+   
